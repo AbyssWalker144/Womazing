@@ -1,0 +1,68 @@
+.contacts {
+    .map {
+        margin-bottom: 130px;
+    }
+
+    &-block {
+        margin-bottom: 130px;
+        justify-content: flex-start;
+        gap: 100px;
+
+        &__item {
+            .title {
+                margin-bottom: 15px;
+            }
+
+            a {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .feedback {
+
+        .headline {
+            margin-bottom: 60px;
+        }
+
+        &__form {
+            textarea {
+                resize: none;
+                width: 350px;
+                height: 90px;
+                border: none;
+                outline: none;
+                border-bottom: 1px solid black;
+                color: #868686;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 500;
+                vertical-align: middle;
+            }
+
+            .button {
+                margin: 0 auto;
+            }
+        }
+
+        .message-sent {
+            background-color: #F1EADC;
+            width: 350px;
+            height: 84px;
+            text-align: center;
+            line-height: 84px;
+            margin-top: 40px;
+            transition: opacity .5s ease;
+            opacity: 0;
+
+            &.entering {
+                opacity: 1;
+            }
+            &.entered {
+                opacity: 1;
+            }
+            &.exiting {
+                opacity: 0;
+            }
+        }
+    }
+}

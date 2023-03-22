@@ -1,0 +1,16 @@
+.form {
+    width: 350px;
+    align-items: flex-start;
+
+    label {
+        margin-bottom: 35px;
+    }
+    .error {
+        border-bottom: 2px solid #ff4040 !important;
+    }
+
+    .error-label {
+        color: #ff4040;
+        font-size: 12px;
+    }
+}

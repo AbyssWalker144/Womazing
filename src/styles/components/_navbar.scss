@@ -1,0 +1,16 @@
+.nav {
+    gap: 45px;
+
+    .link {
+        font-weight: 500;
+
+        &.active {
+            color: #6E9C9F;
+        }
+
+        &:hover {
+            text-decoration: underline;
+            color: #6E9C9F;
+        }
+    }
+}

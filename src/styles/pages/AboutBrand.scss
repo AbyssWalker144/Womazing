@@ -1,0 +1,30 @@
+.about {
+  display: flex;
+  text-align: left;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 214px;
+  margin-bottom: 130px;
+
+  img {
+    width: 442px;
+    height: 547px;
+  }
+
+  .about-text {
+    width: 542px;
+
+
+    h3 {
+      margin-bottom: 46px;
+    }
+    p {
+      padding-bottom: 25px;
+      padding-right: 20px;
+    }
+  }
+
+}
+.button {
+  margin: 0 auto;
+}

@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    //padding: 0 5%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    height: 68px;
+    border: none;
+    background-color: transparent;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: 400;
+    line-height: 138.9%;
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container {
+    max-width: 1110px;
+    margin: 0 auto;
+    position: relative;
+}
+
+h1 {
+    font-weight: 500;
+    font-size: 55px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+}
+
+h2 {
+    font-weight: 500;
+    font-size: 40px ;
+    margin-bottom: 92px;
+}
+
+h3 {
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 35px;
+}
+
+h4 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: 0.02em;
+    margin: 24px 0 7px;
+}
+
+p {
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 140%;
+    letter-spacing: 0.02em;
+}
+
+ul li {
+    list-style: none;
+    padding: 0;
+}
+
+.caption {
+    margin-bottom: 26px;
+
+    &-wrapper {
+        padding: 150px 0 26px;
+    }
+}
+
+.bread-crumbs {
+    display: flex;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 140%;
+    letter-spacing: 0.02em;
+
+    a:hover {
+        text-decoration: underline;
+        color: #6E9C9F;
+    }
+
+    span {
+        margin: 0 13px 0 13px;
+    }
+
+    p {
+        color: $light-gray;
+    }
+}

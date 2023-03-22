@@ -1,0 +1,16 @@
+.header {
+    padding: 35px 0 35px;
+    height: 95px;
+    position: fixed;
+    width: 100%;
+    background: white;
+    overflow: hidden;
+    top: 0;
+    //left: 0;
+    z-index: 1;
+    font-size: 15px;
+
+    .contacts {
+        gap: 65px;
+    }
+}
