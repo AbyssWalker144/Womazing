@@ -8,14 +8,18 @@ import Cart from "../pages/Cart/Cart";
 import CompleteOrder from "../pages/CompleteOrder/CompleteOrder";
 import NotFound from "../pages/NotFound/NotFound";
 import Product from "../pages/Product/Product";
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 
 const AppRouter = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+    const location = useLocation();
+
+    useLayoutEffect(() => {
+      window.scrollTo(0, 0);
+    }, [location.pathname]);
+    
 
     return (
         <Fragment>

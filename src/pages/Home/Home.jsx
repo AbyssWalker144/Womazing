@@ -8,9 +8,11 @@ import DreamTeamCarousel from "../../components/DreamTeamCarousel";
 import Picture1 from "../../images/dreamTeamCarousel/dream-team1.png";
 import Picture2 from "../../images/dreamTeamCarousel/dream-team2.png";
 import Picture3 from "../../images/dreamTeamCarousel/dream-team3.png";
+import { useEffect } from 'react';
 
 
 const Home = () => {
+
     let banners = [
         require('../../images/banner/first.jpg'),require('../../images/banner/second.jpg'),require('../../images/banner/third.jpg')
     ]
