@@ -11,11 +11,11 @@ const useCatalogData = (fieldName, id) => {
       // Fetch data for a specific product
       firebase
         .database()
-        .ref(`${fieldName}/${id}`)
+        .ref(`womazing/c01`)
         .once("value")
         .then((snapshot) => setData(snapshot.val()))
         .catch((error) => {
-          console.error(error);
+        //   console.error(error);
         });
     } else {
       // Fetch all data

@@ -10,7 +10,7 @@ const Product = () => {
 
   const { id } = useParams();
   console.log(id);
-  const productData = useCatalogData("womazing", id);
+  const productData = useCatalogData("womazing", 'c02');
   console.log(productData);
 
   const location = useLocation();
