@@ -4,8 +4,14 @@ import {NavLink, useLocation, useParams} from "react-router-dom";
 import Item from "../../images/cards-img/classic-cotton-raincoat-1.jpg";
 import {getDownloadURL, getStorage, ref} from "firebase/storage";
 import Card from "../../components/UI/Card";
+import useCatalogData from "../../custom-hooks/useCatalogData";
 
 const Product = () => {
+
+  const { id } = useParams();
+  console.log(id);
+  const productData = useCatalogData("womazing", id);
+  console.log(productData);
 
   const location = useLocation();
   const data = location.state?.data;

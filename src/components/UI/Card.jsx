@@ -45,7 +45,7 @@ const Card = (props) => {
   return (
     <div className="cards__card flex-column">
 
-      <Link state={{ data: data }} className="cards__image-wrapper imgLink" to={`/product/${id}`}>
+      <Link state={{ data: data }} className="cards__image-wrapper imgLink" to={`/${category}/${id}`}>
 
         <img src={mainImage ? imgUrl : Item}/>
 

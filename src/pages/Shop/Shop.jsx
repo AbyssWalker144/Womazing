@@ -9,7 +9,7 @@ import {useSelector} from "react-redux";
 const Shop = () => {
 
     const value = useSelector(state => state.firebaseData.jsonObj);
-    // console.log(value);
+    console.log(value);
 
     const womazing = useCatalogData('womazing');
     console.log(womazing);
@@ -19,13 +19,8 @@ const Shop = () => {
 
     const categories = ['Все', 'Пальто', 'Свитшоты', 'Кардиганы', 'Рубашки'];
 
-
-
-
-
     const [checked, setChecked] = useState("");
     const [paginationData, setPaginationData] = useState([]);
-
 
     console.log(paginationData);
 
