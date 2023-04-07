@@ -43,14 +43,6 @@ const Shop = () => {
     console.log(paginationData);
     console.log(paginationData[0]);
 
-    // const [status, setStatus] = useState('all');
-    //
-    // const [catalog, setCatalog] = useState(null);
-    //
-    const hand = (e) => {
-
-    }
-
     return (
         <div className="shop">
             <Caption caption="Магазин"/>

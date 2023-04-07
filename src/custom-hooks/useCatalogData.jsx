@@ -6,16 +6,15 @@ const useCatalogData = (fieldName, id) => {
 
   useEffect(() => {
     if (id) {
-        console.log(id);
-        console.log(fieldName);
       // Fetch data for a specific product
-      firebase
-        .database()
-        .ref(`womazing/c01`)
-        .once("value")
-        .then((snapshot) => setData(snapshot.val()))
-        .catch((error) => {
-        //   console.error(error);
+      const ref = firebase.database().ref(fieldName);
+      ref.orderByChild("id").equalTo(id).once("value")
+        .then(snapshot => {
+          const data = snapshot.val();
+          console.log(data);
+        })
+        .catch(error => {
+          console.error(error);
         });
     } else {
       // Fetch all data
