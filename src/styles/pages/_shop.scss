@@ -25,6 +25,11 @@
             cursor: pointer;
             color: black;
             position: relative;
+
+            &.active {
+                background: black;
+                color: white;
+            }
         }
 
         input {

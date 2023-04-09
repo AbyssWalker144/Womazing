@@ -4,7 +4,7 @@ import Caption from "../../components/UI/Caption";
 import Pagination from "../../components/Pagination";
 import {Link} from "react-router-dom";
 import useCatalogData from "../../custom-hooks/useCatalogData";
-import {NavLink} from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -54,15 +54,15 @@ const ShopFiltered = (props) => {
 
             <nav className="shop__filter">
 
-                <NavLink className="filter-option" to={'/shop'} >Все товары</NavLink>
+                <NavLink exact className="filter-option" to={'/shop'} key={'/shop'} >Все товары</NavLink>
 
-                <NavLink className="filter-option" to={'/shop/Пальто'} >Пальто</NavLink>
+                <NavLink className="filter-option" to={'/shop/Пальто'} key={'/shop/Пальто'}>Пальто</NavLink>
 
-                <NavLink className="filter-option" to={'/shop/Свитшоты'} >Свитшоты</NavLink>
+                <NavLink className="filter-option" to={'/shop/Свитшоты'} key={'/shop/Свитшоты'}>Свитшоты</NavLink>
 
-                <NavLink className="filter-option" to={'/shop/Кардиганы'} >Кардиганы</NavLink>
+                <NavLink className="filter-option" to={'/shop/Кардиганы'} key={'/shop/Кардиганы'}>Кардиганы</NavLink>
 
-                <NavLink className="filter-option" to={'/shop/Рубашки'} >Рубашки</NavLink>
+                <NavLink className="filter-option" to={'/shop/Рубашки'} key={'/shop/Рубашки'}>Рубашки</NavLink>
 
             </nav>
 
@@ -76,5 +76,4 @@ const ShopFiltered = (props) => {
         </div>
     );
 };
-
 export default ShopFiltered;
