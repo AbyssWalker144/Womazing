@@ -8,6 +8,25 @@
         gap: 30px;
         margin: 100px 0 50px 0;
 
+        .filter-option{
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            text-align: center;
+            line-height: 320%;
+
+            width: 200px;
+            height: 60px;
+
+            border: 1px solid #999;
+            transition: 0.2s all linear;
+            outline: none;
+
+            cursor: pointer;
+            color: black;
+            position: relative;
+        }
+
         input {
 
             -webkit-appearance: none;

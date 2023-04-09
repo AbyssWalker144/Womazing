@@ -5,8 +5,9 @@ import Pagination from "../../components/Pagination";
 import {Link} from "react-router-dom";
 import useCatalogData from "../../custom-hooks/useCatalogData";
 import {useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
 
-const Shop = () => {
+const Shop = (props) => {
 
     const value = useSelector(state => state.firebaseData.jsonObj);
     console.log(value);
@@ -49,6 +50,20 @@ const Shop = () => {
           <div className="bread-crumbs">
             <Link to="/">Главная</Link> <span>—</span>  <p to="/shop">Магазин</p>
           </div>
+
+            <nav className="shop__filter">
+
+                <NavLink className="filter-option" to={'/shop'} >Все товары</NavLink>
+
+                <NavLink className="filter-option" to={'/shop/Пальто'} >Пальто</NavLink>
+
+                <NavLink className="filter-option" to={'/shop/Свитшоты'} >Свитшоты</NavLink>
+
+                <NavLink className="filter-option" to={'/shop/Кардиганы'} >Кардиганы</NavLink>
+
+                <NavLink className="filter-option" to={'/shop/Рубашки'} >Рубашки</NavLink>
+
+            </nav>
 
             <form className="shop__filter">
 

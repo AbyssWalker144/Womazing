@@ -10,6 +10,7 @@ import NotFound from "../pages/NotFound/NotFound";
 import Product from "../pages/Product/Product";
 import { useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import ShopFiltered from '../pages/Shop/ShopFiltered';
 
 
 const AppRouter = () => {
@@ -29,10 +30,12 @@ const AppRouter = () => {
 
                 <Route path="/" element={<Home/>}/>
                 <Route path="/shop" element={<Shop/>}/>
+                <Route path="/shop/:category" element={<ShopFiltered/>}/>
+
                 <Route path="/about" element={<AboutBrand/>}/>
                 <Route path="/contacts" element={<Contacts/>}/>
 
-                <Route path="/:category/:id" element={<Product/>}/>
+                <Route path="/shop/:category/:id" element={<Product/>}/>
 
                 <Route path="/cart" element={<Cart/>}/>
                 <Route path="/complete-order" element={<CompleteOrder/>}/>

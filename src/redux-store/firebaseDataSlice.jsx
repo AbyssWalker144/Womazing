@@ -8,12 +8,12 @@ export const firebaseDataSlice = createSlice({
         value: '',
     },
     reducers: {
-        setData: (state) => {
-            
+        setWomazingData: (state, action) => {
+            state.value = action.payload; 
         }
     }
 })
 
-export const { downloadData } = firebaseDataSlice.actions;
+export const { setWomazingData } = firebaseDataSlice.actions;
 
 export default firebaseDataSlice.reducer;  
