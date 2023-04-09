@@ -34,10 +34,10 @@ const Footer = () => {
                     <a href='#'>Публичная оферта</a>
                 </div>
                 <div className='catalog'>
-                    <Link to='/'>Пальто</Link>
-                    <Link to='/'>Свитшоты</Link>
-                    <Link to='/'>Кардиганы</Link>
-                    <Link to='/'>Толстовки</Link>
+                    <Link to='shop/Пальто'>Пальто</Link>
+                    <Link to='shop/Свитшоты'>Свитшоты</Link>
+                    <Link to='shop/Кардиганы'>Кардиганы</Link>
+                    <Link to='shop/Рубашки'>Рубашки</Link>
                 </div>
             </div>
         </footer>
