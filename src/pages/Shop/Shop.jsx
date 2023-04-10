@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from "../../components/UI/Card";
 import Caption from "../../components/UI/Caption";
 import Pagination from "../../components/Pagination";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import useCatalogData from "../../custom-hooks/useCatalogData";
 import { useSelector, useDispatch } from 'react-redux';
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Shop = () => {
 
@@ -35,14 +35,14 @@ const Shop = () => {
         },
     ]
 
-    const setActive = ({isActive}) => isActive ? 'filter-option active' : 'filter-option';
+    const setActive = ({ isActive }) => isActive ? 'filter-option active' : 'filter-option';
 
     return (
         <div className="shop">
-            <Caption caption="Магазин"/>
-          <div className="bread-crumbs">
-            <Link to="/">Главная</Link> <span>—</span>  <p to="/shop">Магазин</p>
-          </div>
+            <Caption caption="Магазин" />
+            <div className="bread-crumbs">
+                <Link to="/">Главная</Link> <span>—</span>  <p to="/shop">Магазин</p>
+            </div>
 
             <nav className="shop__filter">
 
@@ -57,7 +57,7 @@ const Shop = () => {
             <p>Показано: 9 из 12 товаров</p>
             <div className="cards flex">
 
-                <Pagination data = { womazingData }/>
+                <Pagination data={womazingData} />
 
             </div>
 

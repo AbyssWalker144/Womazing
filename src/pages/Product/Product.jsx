@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Caption from '../../components/UI/Caption';
-import {NavLink, useLocation, useParams} from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import Item from "../../images/cards-img/classic-cotton-raincoat-1.jpg";
-import {getDownloadURL, getStorage, ref} from "firebase/storage";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import Card from "../../components/UI/Card";
 import useCatalogData from "../../custom-hooks/useCatalogData";
 
@@ -86,14 +86,14 @@ const Product = () => {
 
   return (
     <div>
-      <Caption caption={data.name}/>
+      <Caption caption={data.name} />
       <div className="bread-crumbs">
         <NavLink to="/">Главная</NavLink>
         <span>—</span>
         <NavLink to="/shop">Магазин</NavLink>
         <span>—</span>
         <NavLink to="/shop"
-          // onClick={}
+        // onClick={}
         >{data.category}</NavLink>
         <span>—</span>
         <p>{data.name}</p>
@@ -102,7 +102,7 @@ const Product = () => {
 
       <div className="product">
         <div className="product__info flex">
-          <img src={data.mainImage ? imgUrl : Item} alt={data.name}/>
+          <img src={data.mainImage ? imgUrl : Item} alt={data.name} />
 
           <div className="product__allOptions">
             <h2 className="product__price">{data.price} грн</h2>
@@ -125,8 +125,8 @@ const Product = () => {
 
               {
                 colorsNames.map(name => (
-                  <li style={{backgroundColor: colorsObj[name]}} title={name} className="product__options-colorBtn"
-                      // onClick={chooseColor()}
+                  <li style={{ backgroundColor: colorsObj[name] }} title={name} className="product__options-colorBtn"
+                  // onClick={chooseColor()}
                   />
                 ))
               }
@@ -136,7 +136,7 @@ const Product = () => {
             {/*<p className="product__colors__value color">Один цвет</p>*/}
 
             <div className="product__form flex">
-              <input className="product__form__input" type="number" min='1' defaultValue='1'/>
+              <input className="product__form__input" type="number" min='1' defaultValue='1' />
               <button className="product__form__btn button">Добавить в корзину</button>
             </div>
 
@@ -151,8 +151,8 @@ const Product = () => {
 
       <h2 className="relatedProducts">Связанные товары</h2>
       <div className="flex relatedProducts__cards">
-        <Card/>
-        <Card/>
+        <Card />
+        <Card />
       </div>
 
     </div>
