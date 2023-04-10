@@ -5,7 +5,7 @@ import AppRouter from "./components/AppRouter";
 import Footer from "./components/Footer";
 import useCatalogData from "../src/custom-hooks/useCatalogData";
 import { setWomazingData } from "../src/redux-store/firebaseDataSlice";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
 
 function App() {

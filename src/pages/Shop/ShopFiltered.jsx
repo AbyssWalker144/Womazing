@@ -3,66 +3,59 @@ import Card from "../../components/UI/Card";
 import Caption from "../../components/UI/Caption";
 import Pagination from "../../components/Pagination";
 import {Link} from "react-router-dom";
-import useCatalogData from "../../custom-hooks/useCatalogData";
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-const ShopFiltered = (props) => {
+const ShopFiltered = () => {
 
     const { category } = useParams();
     console.log(category);
 
     const womazingData = useSelector((state) => state.firebaseData.value);
 
-
-
     const filteredData = womazingData.filter(item => item.category === category);
     console.log(filteredData);
 
-    const categories = ['Все', 'Пальто', 'Свитшоты', 'Кардиганы', 'Рубашки'];
+    const categories = [
+        {
+            to: '/shop',
+            label: 'Все'
+        },
+        {
+            to: '/shop/Пальто',
+            label: 'Пальто'
+        },
+        {
+            to: '/shop/Свитшоты',
+            label: 'Свитшоты'
+        },
+        {
+            to: '/shop/Кардиганы',
+            label: 'Кардиганы'
+        },
+        {
+            to: '/shop/Рубашки',
+            label: 'Рубашки'
+        },
+    ]
 
-    const [checked, setChecked] = useState("");
-    const [paginationData, setPaginationData] = useState([]);
-
-    console.log(paginationData);
-
-    // const handleChange = event => {
-
-    //     setPaginationData([]);
-    //     setChecked(event.target.value);
-    //     const tempData = womazing.filter(item => {
-    //         console.log(item.category);
-
-    //         item => item.category === category;
-
-    //     })
-
-    //     console.log(tempData);
-    //     setPaginationData(tempData);
-
-    // }
-    console.log(paginationData);
-    console.log(paginationData[0]);
+    const setActive = ({isActive}) => isActive ? 'filter-option active' : 'filter-option';
 
     return (
         <div className="shop">
             <Caption caption="Магазин"/>
           <div className="bread-crumbs">
-            <Link to="/">Главная</Link> <span>—</span>  <p to="/shop">Магазин</p>
+            <Link to="/">Главная</Link> <span>—</span>  <Link to="/shop">Магазин</Link> <span>—</span> <p>{category}</p>
           </div>
 
             <nav className="shop__filter">
 
-                <NavLink exact className="filter-option" to={'/shop'} key={'/shop'} >Все товары</NavLink>
-
-                <NavLink className="filter-option" to={'/shop/Пальто'} key={'/shop/Пальто'}>Пальто</NavLink>
-
-                <NavLink className="filter-option" to={'/shop/Свитшоты'} key={'/shop/Свитшоты'}>Свитшоты</NavLink>
-
-                <NavLink className="filter-option" to={'/shop/Кардиганы'} key={'/shop/Кардиганы'}>Кардиганы</NavLink>
-
-                <NavLink className="filter-option" to={'/shop/Рубашки'} key={'/shop/Рубашки'}>Рубашки</NavLink>
+                {categories.map(item => {
+                    return (
+                        <NavLink end to={item.to} key={item.to} className={setActive}>{item.label}</NavLink>
+                    )
+                })}
 
             </nav>
 
