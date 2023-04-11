@@ -6,11 +6,26 @@ import { Link } from "react-router-dom";
 import useCatalogData from "../../custom-hooks/useCatalogData";
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
+import { Blocks } from 'react-loader-spinner';
 
 const Shop = () => {
 
-    const womazingData = useSelector((state) => state.firebaseData.value);
-    console.log(womazingData);
+    // const womazingData = useSelector((state) => state.firebaseData.value);
+    // console.log(womazingData);
+
+    const selector = useSelector(state => state.firebaseData.value);
+
+    const [womazingData, setWomazingData] = useState([]);
+    const [visibility, setVisibility] = useState([true]);
+
+    useEffect(() => {
+        if (selector) {
+            setWomazingData(selector);
+            setVisibility(false)
+        } else { setVisibility(true) }
+    }, [selector]);
+
+    console.log(visibility);
 
     const categories = [
         {
@@ -44,6 +59,7 @@ const Shop = () => {
                 <Link to="/">Главная</Link> <span>—</span>  <p to="/shop">Магазин</p>
             </div>
 
+
             <nav className="shop__filter">
 
                 {categories.map(item => {
@@ -55,6 +71,14 @@ const Shop = () => {
             </nav>
 
             <p>Показано: 9 из 12 товаров</p>
+            <Blocks
+                visible={visibility}
+                height="80"
+                width="80"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="spinner"
+            />
             <div className="cards flex">
 
                 <Pagination data={womazingData} />
