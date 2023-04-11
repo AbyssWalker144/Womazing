@@ -12,10 +12,16 @@ const ShopFiltered = () => {
     const { category } = useParams();
     console.log(category);
 
-    const womazingData = useSelector((state) => state.firebaseData.value);
+    const womazingData = useSelector(state => state.firebaseData.value);
 
-    const filteredData = womazingData.filter(item => item.category === category);
-    console.log(filteredData);
+    const [filteredData, setFilteredData] = useState([]);
+
+    useEffect(() => {
+    if (womazingData) {
+        const data = womazingData.filter(item => item.category === category);
+        setFilteredData(data);
+    }
+    }, [category, womazingData]);
 
     const categories = [
         {
@@ -62,7 +68,7 @@ const ShopFiltered = () => {
             <p>Показано: 9 из 12 товаров</p>
             <div className="cards flex">
 
-                <Pagination data = { filteredData.lengh !== 0 ?  filteredData : womazingData}/>
+                <Pagination data = { filteredData }/>
 
             </div>
 

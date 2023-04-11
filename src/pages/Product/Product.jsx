@@ -92,7 +92,7 @@ const Product = () => {
         <span>—</span>
         <NavLink to="/shop">Магазин</NavLink>
         <span>—</span>
-        <NavLink to="/shop"
+        <NavLink to={"/shop/" + data.category}
         // onClick={}
         >{data.category}</NavLink>
         <span>—</span>
