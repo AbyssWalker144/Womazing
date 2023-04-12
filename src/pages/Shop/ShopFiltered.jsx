@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from "../../components/UI/Card";
 import Caption from "../../components/UI/Caption";
 import Pagination from "../../components/Pagination";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,15 +15,15 @@ const ShopFiltered = () => {
 
     const womazingData = useSelector(state => state.firebaseData.value);
 
-    const [filteredData, setFilteredData] = useState([]);    
+    const [filteredData, setFilteredData] = useState([]);
     const [visibility, setVisibility] = useState([true]);
 
     useEffect(() => {
-    if (womazingData) {
-        const data = womazingData.filter(item => item.category === category);
-        setFilteredData(data);
-        setVisibility(false);
-    } else {setVisibility(true)}
+        if (womazingData) {
+            const data = womazingData.filter(item => item.category === category);
+            setFilteredData(data);
+            setVisibility(false);
+        } else { setVisibility(true) }
     }, [category, womazingData]);
 
     const categories = [
@@ -49,14 +49,14 @@ const ShopFiltered = () => {
         },
     ]
 
-    const setActive = ({isActive}) => isActive ? 'filter-option active' : 'filter-option';
+    const setActive = ({ isActive }) => isActive ? 'filter-option active' : 'filter-option';
 
     return (
         <div className="shop">
-            <Caption caption="Магазин"/>
-          <div className="bread-crumbs">
-            <Link to="/">Главная</Link> <span>—</span>  <Link to="/shop">Магазин</Link> <span>—</span> <p>{category}</p>
-          </div>
+            <Caption caption="Магазин" />
+            <div className="bread-crumbs">
+                <Link to="/">Главная</Link> <span>—</span>  <Link to="/shop">Магазин</Link> <span>—</span> <p>{category}</p>
+            </div>
 
             <nav className="shop__filter">
 
@@ -79,7 +79,7 @@ const ShopFiltered = () => {
             />
             <div className="cards flex">
 
-                <Pagination data = { filteredData }/>
+                <Pagination data={filteredData} />
 
             </div>
 

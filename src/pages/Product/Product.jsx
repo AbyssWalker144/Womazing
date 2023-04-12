@@ -14,16 +14,18 @@ const Product = () => {
     console.log(id);
 
     const womazingData = useSelector(state => state.firebaseData.value);
+    console.log(womazingData);
     const [thisProductData, setThisProductData] = useState([]);
 
     useEffect(() => {
         if(womazingData) {
             const data = womazingData.filter(item => item.id === id);
-            setThisProductData(data);
+            console.log(data);
+            setThisProductData(data[0]);
         }
-    }, [id]);
+    }, [id, womazingData]);
 
-    id
+    console.log(thisProductData);
 
     const productData = useCatalogData("womazing", id);
     console.log(productData);
@@ -55,7 +57,15 @@ const Product = () => {
     const colorsNamesFromObj = Object.keys(colorsCodesObj);
     console.log(colorsNamesFromObj);
 
-    const colorsOfOurProduct = Object.keys(data.color);
+    const [colorsOfOurProduct, setColorsOfOurProduct] = useState([]);
+
+    useEffect(() => {
+      if(thisProductData) {
+        setColorsOfOurProduct(Object.keys(thisProductData.color));
+      }
+    }, [productData]);
+
+    // const colorsOfOurProduct = Object.keys(data?.color);
     console.log(colorsOfOurProduct);
 
     let colorsObj = [];
