@@ -35,6 +35,11 @@
         gap: 8px;
         grid-column: 1 / 4;
         grid-row: 4;
+        
+        .link:hover{
+            text-decoration: underline;
+            color: #6E9C9F;
+        }
     }
 
     .catalog {

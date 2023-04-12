@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import {Navigate, Route, Routes} from "react-router-dom";
+import React, { Fragment } from 'react';
+import { Navigate, Route, Routes } from "react-router-dom";
 import Shop from "../pages/Shop/Shop";
 import AboutBrand from "../pages/AboutBrand/AboutBrand";
 import Contacts from "../pages/Contacts/Contacts";
@@ -18,27 +18,27 @@ const AppRouter = () => {
     const location = useLocation();
 
     useLayoutEffect(() => {
-      window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
     }, [location.pathname]);
-    
+
 
     return (
         <Fragment>
             <Routes>
                 {/*<Route path='*' element={<Navigate replace to="/" />} />*/}
-                <Route path='*' element={<NotFound/>} />
+                <Route path='*' element={<NotFound />} />
 
-                <Route path="/" element={<Home/>}/>
-                <Route path="/shop" element={<Shop/>}/>
-                <Route path="/shop/:category" element={<ShopFiltered/>}/>
+                <Route path="/" element={<Home />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/shop/:category" element={<ShopFiltered />} />
 
-                <Route path="/about" element={<AboutBrand/>}/>
-                <Route path="/contacts" element={<Contacts/>}/>
+                <Route path="/about" element={<AboutBrand />} />
+                <Route path="/contacts" element={<Contacts />} />
 
-                <Route path="/shop/:category/:id" element={<Product/>}/>
+                <Route path="/shop/:category/:id" element={<Product />} />
 
-                <Route path="/cart" element={<Cart/>}/>
-                <Route path="/complete-order" element={<CompleteOrder/>}/>
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/complete-order" element={<CompleteOrder />} />
             </Routes>
         </Fragment>
     );
