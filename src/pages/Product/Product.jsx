@@ -18,7 +18,7 @@ const Product = () => {
     const [thisProductData, setThisProductData] = useState([]);
 
     useEffect(() => {
-        if(womazingData) {
+        if(womazingData.length !== 0) {
             const data = womazingData.filter(item => item.id === id);
             console.log(data);
             setThisProductData(data[0]);
@@ -26,14 +26,14 @@ const Product = () => {
     }, [id, womazingData]);
 
     console.log(thisProductData);
+    console.log(thisProductData.color);
 
-    const productData = useCatalogData("womazing", id);
-    console.log(productData);
+    // const productData = useCatalogData("womazing", id);
+    // console.log(productData);
 
-    const location = useLocation();
-    const data = location.state?.data;
-    console.log(data);
-    // console.log(data.price);
+    // const location = useLocation();
+    // const data = location.state?.data;
+    // console.log(data);
 
     const colorsCodesObj = {
         "ecru": "#f2e1cd",
@@ -60,12 +60,11 @@ const Product = () => {
     const [colorsOfOurProduct, setColorsOfOurProduct] = useState([]);
 
     useEffect(() => {
-      if(thisProductData) {
+      if(thisProductData.length !== 0) {
         setColorsOfOurProduct(Object.keys(thisProductData.color));
       }
-    }, [productData]);
+    }, [thisProductData]);
 
-    // const colorsOfOurProduct = Object.keys(data?.color);
     console.log(colorsOfOurProduct);
 
     let colorsObj = [];
@@ -81,7 +80,7 @@ const Product = () => {
                 colorsObj[nameKey] = colorsCodesObj[nameKey];
             }
         });
-    }
+    };
 
     console.log(colorsObj);
 
@@ -94,7 +93,7 @@ const Product = () => {
 
 
     const storage = getStorage();
-    const imgRef = ref(storage, `${data.mainImage}`);
+    const imgRef = ref(storage, `${thisProductData.mainImage}`);
 
     const [imgUrl, setImgUrl] = useState('');
 
@@ -111,26 +110,26 @@ const Product = () => {
 
     return (
         <div>
-            <Caption caption={data.name} />
+            <Caption caption={thisProductData.name} />
             <div className="bread-crumbs">
                 <NavLink to="/">Главная</NavLink>
                 <span>—</span>
                 <NavLink to="/shop">Магазин</NavLink>
                 <span>—</span>
-                <NavLink to={"/shop/" + data.category}
+                <NavLink to={"/shop/" + thisProductData.category}
                 // onClick={}
-                >{data.category}</NavLink>
+                >{thisProductData.category}</NavLink>
                 <span>—</span>
-                <p>{data.name}</p>
+                <p>{thisProductData.name}</p>
             </div>
             {/*END of bread-crumbs*/}
 
             <div className="product">
                 <div className="product__info flex">
-                    <img src={data.mainImage ? imgUrl : Item} alt={data.name} />
+                    <img src={thisProductData.mainImage ? imgUrl : Item} alt={thisProductData.name} />
 
                     <div className="product__allOptions">
-                        <h2 className="product__price">{data.price} грн</h2>
+                        <h2 className="product__price">{thisProductData.price} грн</h2>
 
                         <h4>Размер:</h4>
                         <ul className="product__options flex">
@@ -170,14 +169,17 @@ const Product = () => {
 
                 </div>
                 {/*END of img & options of product*/}
-                <p className="product__description">{data.description}</p>
+                <p className="product__description">{thisProductData.description}</p>
             </div>
             {/*END of product*/}
 
             <h2 className="relatedProducts">Связанные товары</h2>
             <div className="flex relatedProducts__cards">
-                <Card />
-                <Card />
+                {womazingData.length !== 0 && 
+                  womazingData.map(item => {
+                    if(item.category === thisProductData.category && item.id !== thisProductData.id) return <Card {...item}/>
+                  })
+                }
             </div>
 
         </div>
