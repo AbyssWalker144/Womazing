@@ -11,22 +11,22 @@ import { useSelector } from 'react-redux';
 const Product = () => {
 
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   const womazingData = useSelector(state => state.firebaseData.value);
-  console.log(womazingData);
+  // console.log(womazingData);
   const [thisProductData, setThisProductData] = useState([]);
 
   useEffect(() => {
     if (womazingData.length !== 0) {
       const data = womazingData.filter(item => item.id === id);
-      console.log(data);
+      // console.log(data);
       setThisProductData(data[0]);
     }
   }, [id, womazingData]);
 
-  console.log(thisProductData);
-  console.log(thisProductData.color);
+  // console.log(thisProductData);
+  // console.log(thisProductData.color);
 
   // const productData = useCatalogData("womazing", id);
   // console.log(productData);
@@ -55,7 +55,7 @@ const Product = () => {
   };
 
   const colorsNamesFromObj = Object.keys(colorsCodesObj);
-  console.log(colorsNamesFromObj);
+  // console.log(colorsNamesFromObj);
 
   const [colorsOfOurProduct, setColorsOfOurProduct] = useState([]);
 
@@ -65,7 +65,7 @@ const Product = () => {
     }
   }, [thisProductData]);
 
-  console.log(colorsOfOurProduct);
+  // console.log(colorsOfOurProduct);
 
   let colorsObj = [];
 
@@ -82,14 +82,11 @@ const Product = () => {
     });
   };
 
-  console.log(colorsObj);
+  // console.log(colorsObj);
 
   let colorsNames = Object.keys(colorsObj);
 
-  //onClick for <li> with color:
-  function chooseColor() {
 
-  }
 
 
   const storage = getStorage();
@@ -97,17 +94,32 @@ const Product = () => {
 
   const [imgsRef, setImgsRef] = useState({});
 
+  // set imgs url
   useEffect(() => {
-
+    setImgsRef({});
     const refs = {};
-    for( const item in thisProductData.color){
-      refs[item] = thisProductData.color[item];
+    for (const item in thisProductData.color) {
+      refs[item] = [];
+      thisProductData.color[item].map(imgName => {
+        if (imgName) {
+          getDownloadURL(ref(storage, imgName))
+            .then((url) => {
+              refs[item].push(url);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+        console.log(imgName);
+      });
+      setImgsRef(refs);
     }
-    setImgsRef(refs);    
+  }, [thisProductData]);
 
-  }, [thisProductData])
-  
-  console.log(imgsRef);
+  useEffect(() => {
+    console.log(imgsRef);
+  }, [imgsRef]);
+
 
   const [imgUrl, setImgUrl] = useState('');
 
@@ -121,7 +133,22 @@ const Product = () => {
       console.log(error);
     });
 
+  const [currentClothColor, setCurrentClothColor] = useState('');
 
+  //onClick for <li> with color:
+  function chooseColor(e) {
+    console.log(e.target.dataset.dataColor);
+    const thisColor = [];
+    for( const color in imgsRef){
+      console.log(color);
+      if(color === e.target.dataset.dataColor){
+        thisColor.push(imgsRef[color]);        
+        console.log(imgsRef[color]);
+      }
+    }
+    setCurrentClothColor(thisColor);
+    console.log(currentClothColor);
+  };
 
   return (
     <div>
@@ -141,7 +168,7 @@ const Product = () => {
 
       <div className="product">
         <div className="product__info flex">
-          <img src={thisProductData.mainImage ? imgUrl : Item} alt={thisProductData.name} />
+          <img src={imgUrl} alt={thisProductData.name} />
 
           <div className="product__allOptions">
             <h2 className="product__price">{thisProductData.price} грн</h2>
@@ -164,8 +191,8 @@ const Product = () => {
 
               {
                 colorsNames.map(name => (
-                  <li style={{ backgroundColor: colorsObj[name] }} title={name} className="product__options-colorBtn"
-                  // onClick={chooseColor()}
+                  <li style={{ backgroundColor: colorsObj[name] }} key ={name} title={name} data-data-color={name} className="product__options-colorBtn"
+                  onClick={chooseColor}
                   />
                 ))
               }
