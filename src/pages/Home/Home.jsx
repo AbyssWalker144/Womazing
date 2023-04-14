@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 
 
 const Home = () => {
+    
 
     let banners = [
         require('../../images/banner/first.jpg'),require('../../images/banner/second.jpg'),require('../../images/banner/third.jpg')

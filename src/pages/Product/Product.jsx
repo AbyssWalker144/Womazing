@@ -95,12 +95,19 @@ const Product = () => {
   const storage = getStorage();
   const imgRef = ref(storage, `${thisProductData.mainImage}`);
 
-  const [imgsRef, setImgsRef] = useState([]);
+  const [imgsRef, setImgsRef] = useState({});
 
   useEffect(() => {
-    const 
-  }, [womazingData])
+
+    const refs = {};
+    for( const item in thisProductData.color){
+      refs[item] = thisProductData.color[item];
+    }
+    setImgsRef(refs);    
+
+  }, [thisProductData])
   
+  console.log(imgsRef);
 
   const [imgUrl, setImgUrl] = useState('');
 
