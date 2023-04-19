@@ -11,9 +11,11 @@ const Card = (props) => {
 
   const {name, mainImage, id, price, description, category, size, color} = props;
   // console.log(mainImage);
+  const firstColorImg = Object.values(color)[0][0];
+  console.log(firstColorImg);
 
   const storage = getStorage();
-  const imgRef = ref(storage, `${mainImage}`);
+  const imgRef = ref(storage, `${firstColorImg}`);
 
   const [imgUrl, setImgUrl] = useState('');
 
@@ -29,23 +31,23 @@ const Card = (props) => {
 
     });
 
-    const [data, setData] = useState({
-      name: `${name}`,
-      mainImage: `${mainImage}`,
-      imgUrl: `${imgUrl}`,
-      description: `${description}`,
-      category: `${category}`,
-      price: `${price}`,
-      size: `${size}`,
-      color: color,
-    });
+    // const [data, setData] = useState({
+    //   name: `${name}`,
+    //   mainImage: `${mainImage}`,
+    //   imgUrl: `${imgUrl}`,
+    //   description: `${description}`,
+    //   category: `${category}`,
+    //   price: `${price}`,
+    //   size: `${size}`,
+    //   color: color,
+    // });
 
   // console.log(mainImage);
   // console.log(imgRef);
   return (
     <div className="cards__card flex-column">
 
-      <Link state={{ data: data }} className="cards__image-wrapper imgLink" to={`/shop/${category}/${id}`}>
+      <Link className="cards__image-wrapper imgLink" to={`/shop/${category}/${id}`}>
 
         <img src={mainImage ? imgUrl : Item}/>
 

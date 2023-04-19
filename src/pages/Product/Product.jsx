@@ -11,10 +11,8 @@ import { useSelector } from 'react-redux';
 const Product = () => {
 
   const { id } = useParams();
-  // console.log(id);
 
   const womazingData = useSelector(state => state.firebaseData.value);
-  // console.log(womazingData);
   const [thisProductData, setThisProductData] = useState([]);
 
   useEffect(() => {
@@ -25,8 +23,8 @@ const Product = () => {
     }
   }, [id, womazingData]);
 
-  // console.log(thisProductData);
-  // console.log(thisProductData.color);
+  console.log(thisProductData);
+  console.log(thisProductData.color);
 
   // const productData = useCatalogData("womazing", id);
   // console.log(productData);
@@ -46,12 +44,13 @@ const Product = () => {
     "grey": "#808080",
     "brown": "#3b2904",
     "beige": "#f5f5dc",
-    "dark-blue": "#00008b",
+    "dark-blue": "#1A222E",
     "light-brown": "#C4A484",
     "white": "#FFFFFF",
     "pink": "#F81894",
     "red": "#FF0000",
     "fuchsia": "#BF026D",
+    "sky-blue": "#2892EA",
   };
 
   const colorsNamesFromObj = Object.keys(colorsCodesObj);
@@ -60,12 +59,13 @@ const Product = () => {
   const [colorsOfOurProduct, setColorsOfOurProduct] = useState([]);
 
   useEffect(() => {
-    if (thisProductData.length !== 0) {
-      setColorsOfOurProduct(Object.keys(thisProductData.color));
-    }
+    if (thisProductData.length == 0) return
+
+    setColorsOfOurProduct(Object.keys(thisProductData.color));
+
   }, [thisProductData]);
 
-  // console.log(colorsOfOurProduct);
+  console.log(colorsOfOurProduct);
 
   let colorsObj = [];
 
@@ -86,6 +86,8 @@ const Product = () => {
 
   let colorsNames = Object.keys(colorsObj);
 
+  console.log(colorsNames);
+
 
 
 
@@ -93,6 +95,8 @@ const Product = () => {
   const imgRef = ref(storage, `${thisProductData.mainImage}`);
 
   const [imgsRef, setImgsRef] = useState({});
+
+  const [currentClothColor, setCurrentClothColor] = useState([]);
 
   // set imgs url
   useEffect(() => {
@@ -105,6 +109,7 @@ const Product = () => {
           getDownloadURL(ref(storage, imgName))
             .then((url) => {
               refs[item].push(url);
+              console.log(url);
             })
             .catch((error) => {
               console.log(error);
@@ -114,7 +119,11 @@ const Product = () => {
       });
       setImgsRef(refs);
     }
+    setCurrentClothColor(Object.values(imgsRef));
   }, [thisProductData]);
+
+  console.log(Object.values(imgsRef));
+  console.log(currentClothColor);
 
   useEffect(() => {
     console.log(imgsRef);
@@ -133,21 +142,30 @@ const Product = () => {
       console.log(error);
     });
 
-  const [currentClothColor, setCurrentClothColor] = useState('');
+
 
   //onClick for <li> with color:
   function chooseColor(e) {
     console.log(e.target.dataset.dataColor);
-    const thisColor = [];
-    for( const color in imgsRef){
+    let thisColor = '';
+    for (const color in imgsRef) {
       console.log(color);
-      if(color === e.target.dataset.dataColor){
-        thisColor.push(imgsRef[color]);        
-        console.log(imgsRef[color]);
-      }
+      if (color !== e.target.dataset.dataColor) continue;
+
+      thisColor = imgsRef[color];
+      console.log(imgsRef[color]);
     }
     setCurrentClothColor(thisColor);
     console.log(currentClothColor);
+  };
+
+  useEffect(() => {
+    setCurrentClothColor([]);
+  }, [thisProductData]);
+
+  const [currentPhoto, setCurrentPhoto] = useState(0);
+  const handleSwitch = (colorIndex) => {
+    setCurrentPhoto(colorIndex);
   };
 
   return (
@@ -168,7 +186,16 @@ const Product = () => {
 
       <div className="product">
         <div className="product__info flex">
-          <img src={imgUrl} alt={thisProductData.name} />
+          <div className='imgBlock'>
+            <img src={currentClothColor[0] ? currentClothColor[currentPhoto] : imgUrl} alt={thisProductData.name} />
+
+            <div className='colorSwitcher flex'>
+              {currentClothColor.map((color, colorIndex) => (
+                <div key={colorIndex} className={`rectangle ${currentPhoto === colorIndex ? 'active' : ''}`} onClick={() => handleSwitch(colorIndex)}></div>
+              ))}
+            </div>
+
+          </div>
 
           <div className="product__allOptions">
             <h2 className="product__price">{thisProductData.price} грн</h2>
@@ -191,8 +218,8 @@ const Product = () => {
 
               {
                 colorsNames.map(name => (
-                  <li style={{ backgroundColor: colorsObj[name] }} key ={name} title={name} data-data-color={name} className="product__options-colorBtn"
-                  onClick={chooseColor}
+                  <li style={{ backgroundColor: colorsObj[name] }} key={name} title={name} data-data-color={name} className="product__options-colorBtn"
+                    onClick={chooseColor}
                   />
                 ))
               }
