@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Item from '../../images/cards-img/classic-cotton-raincoat-1.jpg';
 import {Link} from "react-router-dom";
 import ArrowOnAProduct from '../../images/cards-img/arrowOnAProduct.svg';
@@ -11,8 +11,14 @@ const Card = (props) => {
 
   const {name, mainImage, id, price, description, category, size, color} = props;
   // console.log(mainImage);
-  const firstColorImg = Object.values(color)[0][0];
-  console.log(firstColorImg);
+
+  const [firstColorImg, setFirstColorImg] = useState();
+
+  useEffect(() => {
+    if(!color) return
+    setFirstColorImg(Object.values(color)[0][0]);
+  }, [color]);
+  // console.log(firstColorImg);
 
   const storage = getStorage();
   const imgRef = ref(storage, `${firstColorImg}`);
