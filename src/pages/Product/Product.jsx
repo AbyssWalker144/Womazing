@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Caption from '../../components/UI/Caption';
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import Item from "../../images/cards-img/classic-cotton-raincoat-1.jpg";
@@ -95,27 +95,46 @@ const Product = () => {
   const [imgsRef, setImgsRef] = useState({});
 
   // set imgs url
+  // useEffect(() => {
+  //   setImgsRef({});
+  //   const refs = {};
+  //   for (const item in thisProductData.color) {
+  //     refs[item] = [];
+  //     thisProductData.color[item].forEach(imgName => {
+  //       if (imgName) {
+  //         getDownloadURL(ref(storage, imgName))
+  //           .then((url) => {
+  //             refs[item].push(url);
+  //             console.log(url);
+  //           })
+  //           .catch((error) => {
+  //             console.log(error);
+  //           });
+  //       }
+  //       console.log(imgName);
+  //     });
+  //   }
+  //   setImgsRef(refs);
+  // }, [thisProductData]);
+
   useEffect(() => {
-    setImgsRef({});
-    const refs = {};
-    for (const item in thisProductData.color) {
-      refs[item] = [];
-      thisProductData.color[item].forEach(imgName => {
-        if (imgName) {
-          getDownloadURL(ref(storage, imgName))
-            .then((url) => {
+    const fetchImgUrls = async () => {
+      const refs = {};
+      for (const item in thisProductData.color) {
+        refs[item] = [];
+        await Promise.all(
+          thisProductData.color[item].map(async (imgName) => {
+            if (imgName) {
+              const url = await getDownloadURL(ref(storage, imgName));
               refs[item].push(url);
-              console.log(url);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-        console.log(imgName);
-      });
-    }
-    setImgsRef(refs);
-  }, [thisProductData]);
+            }
+          })
+        );
+      }
+      setImgsRef(refs);
+    };
+    fetchImgUrls();
+  }, [id, storage, thisProductData]);
 
   console.log(Object.values(imgsRef));
 
@@ -145,16 +164,16 @@ const Product = () => {
 
   const [currentClothPhotos, setCurrentClothPhotos] = useState([]);
 
-  useEffect(() => {
-    setCurrentClothPhotos([]);
-    if (imgsRef && Object.values(imgsRef)[0]) {
-      const firstKey = Object.keys(imgsRef)[0];
-      const firstKeyValues = imgsRef[firstKey];
-      console.log(imgsRef);
-      console.log(firstKeyValues);
-      setCurrentClothPhotos(firstKeyValues);
-    }
-  }, [thisProductData, imgsRef]);
+  // useEffect(() => {
+  //   setCurrentClothPhotos([]);
+  //   if (imgsRef && Object.values(imgsRef)[0]) {
+  //     const firstKey = Object.keys(imgsRef)[0];
+  //     const firstKeyValues = imgsRef[firstKey];
+  //     console.log(imgsRef);
+  //     console.log(firstKeyValues);
+  //     setCurrentClothPhotos(firstKeyValues);
+  //   }
+  // }, [thisProductData, imgsRef]);
 
   useEffect(() => {
     console.log(currentClothPhotos);
@@ -162,7 +181,8 @@ const Product = () => {
 
   //onClick for <li> with color:
   function chooseColor(e) {
-    setCurrentPhoto(0);
+    console.log(e.target);
+    setCurrentPhoto((currentColor) => {return currentColor = 0});
     console.log(e.target.dataset.dataColor);
     let thisColor = '';
     for (const color in imgsRef) {
@@ -172,15 +192,20 @@ const Product = () => {
       thisColor = imgsRef[color];
       console.log(imgsRef[color]);
     }
-    setCurrentClothPhotos(thisColor);
-    console.log(currentClothPhotos);
+    setCurrentClothPhotos((currentColor) => {return currentColor = thisColor});
   };
 
   // useEffect(() => {
   //   setCurrentClothPhotos([]);
   // }, [thisProductData]);
 
+  const firstLiRef = useRef(null);
 
+  useEffect(() => {
+    const firstColor = firstLiRef.current;
+    console.log(firstColor);
+    if (firstColor) firstColor.click();
+  }, [imgsRef])
 
   return (
     <div>
@@ -201,17 +226,22 @@ const Product = () => {
       <div className="product">
         <div className="product__info flex">
           <div className='imgBlock'>
-            {/* <img src={currentClothPhotos[0] ? currentClothPhotos[currentPhoto] : imgUrl} alt={thisProductData.name} />
+            {/* <img src={currentClothPhotos[0] ? currentClothPhotos[currentPhoto] : imgUrl} alt={thisProductData.name} /> */}
 
-            <div className='colorSwitcher flex'>
+            {/* <div className='colorSwitcher flex'>
               {currentClothPhotos.map((photo, photoIndex) => (
-                <div key={photoIndex} className={`rectangle ${currentPhoto === photoIndex ? 'active' : ''}`} onClick={() => handleSwitch(photoIndex)}></div>  
+                <div key={photoIndex} className={`rectangle ${currentPhoto === photoIndex ? 'active' : ''}`} onClick={() => handleSwitch(photoIndex)}></div>
               ))}
             </div> */}
-            <ProductCarousel key={thisProductData.id} currentClothPhotos={currentClothPhotos}
-            name={thisProductData.name}/>
-                
-            
+            {/* <ProductCarousel key={thisProductData.id} currentClothPhotos={currentClothPhotos}
+            name={thisProductData.name}/> */}
+            <ProductCarousel
+              key={thisProductData.id}
+              currentClothPhotos={currentClothPhotos}
+              name={thisProductData.name}
+            />
+
+
           </div>
 
           <div className="product__allOptions">
@@ -234,8 +264,13 @@ const Product = () => {
             <ul className="product__options flex">
 
               {
-                colorsNames.map(name => (
-                  <li style={{ backgroundColor: colorsObj[name] }} key={name} title={name} data-data-color={name} className="product__options-colorBtn"
+                colorsNames.map((name, index) => (
+                  <li
+                    ref={index === 0 ? firstLiRef : null}
+                    style={{ backgroundColor: colorsObj[name] }}
+                    key={name} title={name}
+                    data-data-color={name}
+                    className="product__options-colorBtn"
                     onClick={chooseColor}
                   />
                 ))
@@ -263,7 +298,7 @@ const Product = () => {
       <div className="flex relatedProducts__cards">
         {womazingData.length !== 0 &&
           womazingData.map(item => {
-            if (item.category === thisProductData.category && item.id !== thisProductData.id) return <Card {...item} />
+            if (item.category === thisProductData.category && item.id !== thisProductData.id) return <Card key={item.id} {...item} />
           })
         }
       </div>

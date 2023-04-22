@@ -33,7 +33,7 @@ const Card = (props) => {
     })
     .catch((error) => {
 
-      // Handle any errors
+      console.log(error);
 
     });
 

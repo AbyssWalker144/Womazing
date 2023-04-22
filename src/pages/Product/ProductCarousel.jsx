@@ -26,13 +26,13 @@ const ProductCarousel = ({ currentClothPhotos, name }) => {
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        <p>isLoading...</p>
       ) : (
         <>
           <img src={currentClothPhotos[currentPhoto]} alt={name} />
 
           <div className='colorSwitcher flex'>
-            {currentClothPhotos.map((photo, photoIndex) => (
+            {Array.isArray(currentClothPhotos) && currentClothPhotos?.map((photo, photoIndex) => (
               <div
                 key={photoIndex}
                 className={`rectangle ${
