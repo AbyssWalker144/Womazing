@@ -14,25 +14,19 @@ const Product = () => {
   const { id } = useParams();
 
   const womazingData = useSelector(state => state.firebaseData.value);
-  const [thisProductData, setThisProductData] = useState([]);
+  console.log(womazingData);
+  const [thisProductData, setThisProductData] = useState({});
 
-  useEffect(() => {
-    if (womazingData.length !== 0) {
-      const data = womazingData.filter(item => item.id === id);
-      // console.log(data);
-      setThisProductData(data[0]);
-    }
-  }, [id, womazingData]);
+    useEffect(() => {
+      if (womazingData.length !== 0) {
+        const data = womazingData.filter(item => item.id === id);
+        console.log(data);
+        setThisProductData(data[0] || {});
+      }
+    }, [id, womazingData]);
 
-  console.log(thisProductData);
+  console.log(`thisProductData:`, thisProductData);
   console.log(thisProductData.color);
-
-  // const productData = useCatalogData("womazing", id);
-  // console.log(productData);
-
-  // const location = useLocation();
-  // const data = location.state?.data;
-  // console.log(data);
 
   const colorsCodesObj = {
     "ecru": "#f2e1cd",
@@ -60,13 +54,13 @@ const Product = () => {
   const [colorsOfOurProduct, setColorsOfOurProduct] = useState([]);
 
   useEffect(() => {
-    if (thisProductData.length == 0) return
+    if (!Object.keys(thisProductData).length) return
 
     setColorsOfOurProduct(Object.keys(thisProductData.color));
 
   }, [thisProductData]);
 
-  console.log(colorsOfOurProduct);
+  console.log(`colorsOfOurProduct`, colorsOfOurProduct);
 
   let colorsObj = [];
 
@@ -87,10 +81,9 @@ const Product = () => {
 
   let colorsNames = Object.keys(colorsObj);
 
-  console.log(colorsNames);
+  console.log(`colorsNames`, colorsNames);
 
   const storage = getStorage();
-  const imgRef = ref(storage, `${thisProductData.mainImage}`);
 
   const [imgsRef, setImgsRef] = useState({});
 
@@ -118,43 +111,39 @@ const Product = () => {
   // }, [thisProductData]);
 
   useEffect(() => {
+    setImgsRef({});
+    console.log('--------refs useEffect---------');
     const fetchImgUrls = async () => {
       const refs = {};
       for (const item in thisProductData.color) {
+        console.log(thisProductData.color);
+        console.log('item:', item);
         refs[item] = [];
         await Promise.all(
           thisProductData.color[item].map(async (imgName) => {
+            console.log('imgName:', imgName);
             if (imgName) {
               const url = await getDownloadURL(ref(storage, imgName));
+              console.log(imgName);
+              console.log(url);
               refs[item].push(url);
             }
           })
         );
       }
+      console.log(`refs`, refs);
+      console.log(`thisProductData`, thisProductData);
       setImgsRef(refs);
     };
     fetchImgUrls();
-  }, [id, storage, thisProductData]);
+  }, [thisProductData, storage]);
 
-  console.log(Object.values(imgsRef));
+  console.log('imgsRef', imgsRef);
 
   useEffect(() => {
     console.log(imgsRef);
     console.log(Object.values(imgsRef)[0]);
-  }, [imgsRef]);
-
-
-  const [imgUrl, setImgUrl] = useState('');
-
-  getDownloadURL(imgRef)
-    .then((url) => {
-
-      setImgUrl(url);
-
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  }, [id, imgsRef]);
 
 
   const [currentPhoto, setCurrentPhoto] = useState(0);
@@ -164,17 +153,6 @@ const Product = () => {
 
   const [currentClothPhotos, setCurrentClothPhotos] = useState([]);
 
-  // useEffect(() => {
-  //   setCurrentClothPhotos([]);
-  //   if (imgsRef && Object.values(imgsRef)[0]) {
-  //     const firstKey = Object.keys(imgsRef)[0];
-  //     const firstKeyValues = imgsRef[firstKey];
-  //     console.log(imgsRef);
-  //     console.log(firstKeyValues);
-  //     setCurrentClothPhotos(firstKeyValues);
-  //   }
-  // }, [thisProductData, imgsRef]);
-
   useEffect(() => {
     console.log(currentClothPhotos);
   }, [currentClothPhotos]);
@@ -182,8 +160,9 @@ const Product = () => {
   //onClick for <li> with color:
   function chooseColor(e) {
     console.log(e.target);
-    setCurrentPhoto((currentColor) => {return currentColor = 0});
+    setCurrentPhoto(0);
     console.log(e.target.dataset.dataColor);
+    console.log(imgsRef);
     let thisColor = '';
     for (const color in imgsRef) {
       console.log(color);
@@ -192,7 +171,7 @@ const Product = () => {
       thisColor = imgsRef[color];
       console.log(imgsRef[color]);
     }
-    setCurrentClothPhotos((currentColor) => {return currentColor = thisColor});
+    setCurrentClothPhotos(thisColor);
   };
 
   // useEffect(() => {
@@ -239,6 +218,8 @@ const Product = () => {
               key={thisProductData.id}
               currentClothPhotos={currentClothPhotos}
               name={thisProductData.name}
+              currentPhoto={currentPhoto}
+              setCurrentPhoto={setCurrentPhoto}
             />
 
 

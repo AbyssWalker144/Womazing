@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const ProductCarousel = ({ currentClothPhotos, name }) => {
-  const [currentPhoto, setCurrentPhoto] = useState(0);
+const ProductCarousel = ({ currentClothPhotos, name, currentPhoto, setCurrentPhoto }) => {
+  // const [currentPhoto, setCurrentPhoto] = useState(0);
   const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
