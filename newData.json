@@ -74,12 +74,13 @@
     {
       "category": "Пальто",
       "id": "p03",
-      "mainImage": "handmade-fitted-coat-1.jpg",
-      "name": "Приталенное пальто ручной работы",
+      "mainImage": "handmade-coat-with-belt-1.jpg",
+      "name": "Пальто ручной работы с поясом",
       "price": 7999,
       "color": {
-        "ecru": ["handmade-fitted-coat-1.jpg", "handmade-fitted-coat-2.jpg"],
-        "brown": ["handmade-fitted-coat-3.jpg", "handmade-fitted-coat-4.jpg"]
+        "light-brown": ["handmade-coat-with-belt-1.jpg", "handmade-coat-with-belt-2.jpg"],
+        "black": ["handmade-coat-with-belt-3.jpg", "handmade-coat-with-belt-4.jpg"],
+        "red": ["handmade-coat-with-belt-5.jpg", "handmade-coat-with-belt-6.jpg"]
       },
       "description": "Коллекция Committed. В состав входит переработанная шерсть. Приталенный фасон. Дизайн ручной работы. Длинный фасон. Тяжелая структура. Воротник с лацканами. Сзади разрез. Застежка на пуговицу. Длинные рукава.\n\nИзделия с отметкой Committed изготовлены с использованием экологичных волокон и/или устойчивых производственных процессов, что снижает негативное воздействие на окружающую среду. Mango продолжает поддерживать производственную практику, ориентированную на заботу об окружающей среде, увеличивая таким образом количество экологичных изделий в своих коллекциях."
     },

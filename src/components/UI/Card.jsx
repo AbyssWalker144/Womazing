@@ -3,11 +3,11 @@ import Item from '../../images/cards-img/classic-cotton-raincoat-1.jpg';
 import {Link} from "react-router-dom";
 import ArrowOnAProduct from '../../images/cards-img/arrowOnAProduct.svg';
 
-import {useState} from "react";
+import {useState, memo} from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
-const Card = (props) => {
+const Card = memo((props) => {
 
   const {name, mainImage, id, price, description, category, size, color} = props;
   // console.log(mainImage);
@@ -67,6 +67,6 @@ const Card = (props) => {
 
     </div>
   );
-};
+});
 
 export default Card;

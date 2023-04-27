@@ -17,6 +17,12 @@ const Product = () => {
   console.log(womazingData);
   const [thisProductData, setThisProductData] = useState({});
 
+
+  const [colorsOfOurProduct, setColorsOfOurProduct] = useState([]);
+  const [currentClothPhotos, setCurrentClothPhotos] = useState([]);
+  const [imgsRef, setImgsRef] = useState({});
+  const [currentPhoto, setCurrentPhoto] = useState(0);
+
     useEffect(() => {
       if (womazingData.length !== 0) {
         const data = womazingData.filter(item => item.id === id);
@@ -51,7 +57,7 @@ const Product = () => {
   const colorsNamesFromObj = Object.keys(colorsCodesObj);
   // console.log(colorsNamesFromObj);
 
-  const [colorsOfOurProduct, setColorsOfOurProduct] = useState([]);
+  
 
   useEffect(() => {
     if (!Object.keys(thisProductData).length) return
@@ -83,9 +89,7 @@ const Product = () => {
 
   console.log(`colorsNames`, colorsNames);
 
-  const storage = getStorage();
-
-  const [imgsRef, setImgsRef] = useState({});
+  const storage = getStorage();  
 
   // set imgs url
   // useEffect(() => {
@@ -145,13 +149,9 @@ const Product = () => {
     console.log(Object.values(imgsRef)[0]);
   }, [id, imgsRef]);
 
-
-  const [currentPhoto, setCurrentPhoto] = useState(0);
   const handleSwitch = (colorIndex) => {
     setCurrentPhoto(colorIndex);
   };
-
-  const [currentClothPhotos, setCurrentClothPhotos] = useState([]);
 
   useEffect(() => {
     console.log(currentClothPhotos);
@@ -173,10 +173,6 @@ const Product = () => {
     }
     setCurrentClothPhotos(thisColor);
   };
-
-  // useEffect(() => {
-  //   setCurrentClothPhotos([]);
-  // }, [thisProductData]);
 
   const firstLiRef = useRef(null);
 
@@ -205,15 +201,6 @@ const Product = () => {
       <div className="product">
         <div className="product__info flex">
           <div className='imgBlock'>
-            {/* <img src={currentClothPhotos[0] ? currentClothPhotos[currentPhoto] : imgUrl} alt={thisProductData.name} /> */}
-
-            {/* <div className='colorSwitcher flex'>
-              {currentClothPhotos.map((photo, photoIndex) => (
-                <div key={photoIndex} className={`rectangle ${currentPhoto === photoIndex ? 'active' : ''}`} onClick={() => handleSwitch(photoIndex)}></div>
-              ))}
-            </div> */}
-            {/* <ProductCarousel key={thisProductData.id} currentClothPhotos={currentClothPhotos}
-            name={thisProductData.name}/> */}
             <ProductCarousel
               key={thisProductData.id}
               currentClothPhotos={currentClothPhotos}
@@ -221,8 +208,6 @@ const Product = () => {
               currentPhoto={currentPhoto}
               setCurrentPhoto={setCurrentPhoto}
             />
-
-
           </div>
 
           <div className="product__allOptions">
