@@ -9,11 +9,16 @@
     
     .imgBlock{
         
-        img {
-            max-width: 536px;
+        .imgWrapper{
+            width: 536px;
+            height: 729px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
-        .colorSwitcher{
+        .photoSwitcher{
             margin-top: 25px;
             gap: 12px;
             justify-content:center;
@@ -82,8 +87,21 @@
             border: 2px solid gray;
             border-radius: 50%;
             margin-right: 14px;
+            position: relative;
 
-            &:active {}
+            &.active {
+                border: none;
+                &:after{
+                    content: '';
+                    width: 120%;
+                    height: 120%;
+                    left: -10%;
+                    top: -10%;
+                    background-color: #b2d4d6;
+                    position: absolute;
+                    z-index: -1;
+                }
+            }
         }
 
         &__value {

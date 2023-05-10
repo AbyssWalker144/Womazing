@@ -1,10 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Caption from '../../components/UI/Caption';
-import { NavLink, useLocation, useParams } from "react-router-dom";
-import Item from "../../images/cards-img/classic-cotton-raincoat-1.jpg";
+import { NavLink, useParams } from "react-router-dom";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import Card from "../../components/UI/Card";
-import useCatalogData from "../../custom-hooks/useCatalogData";
 import { useSelector } from 'react-redux';
 import ProductCarousel from './ProductCarousel';
 
@@ -15,21 +13,24 @@ const Product = () => {
 
   const womazingData = useSelector(state => state.firebaseData.value);
   console.log(womazingData);
-  const [thisProductData, setThisProductData] = useState({});
 
+  const colorLiRef = useRef(null);
+
+  const [thisProductData, setThisProductData] = useState({});
 
   const [colorsOfOurProduct, setColorsOfOurProduct] = useState([]);
   const [currentClothPhotos, setCurrentClothPhotos] = useState([]);
   const [imgsRef, setImgsRef] = useState({});
   const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [currentColor, setCurrentColor] = useState(0);
 
-    useEffect(() => {
-      if (womazingData.length !== 0) {
-        const data = womazingData.filter(item => item.id === id);
-        console.log(data);
-        setThisProductData(data[0] || {});
-      }
-    }, [id, womazingData]);
+  useEffect(() => {
+    if (womazingData.length !== 0) {
+      const data = womazingData.filter(item => item.id === id);
+      console.log(data);
+      setThisProductData(data[0] || {});
+    }
+  }, [id, womazingData]);
 
   console.log(`thisProductData:`, thisProductData);
   console.log(thisProductData.color);
@@ -56,8 +57,6 @@ const Product = () => {
 
   const colorsNamesFromObj = Object.keys(colorsCodesObj);
   // console.log(colorsNamesFromObj);
-
-  
 
   useEffect(() => {
     if (!Object.keys(thisProductData).length) return
@@ -89,7 +88,7 @@ const Product = () => {
 
   console.log(`colorsNames`, colorsNames);
 
-  const storage = getStorage();  
+  const storage = getStorage();
 
   // set imgs url
   // useEffect(() => {
@@ -142,10 +141,8 @@ const Product = () => {
     fetchImgUrls();
   }, [thisProductData, storage]);
 
-  console.log('imgsRef', imgsRef);
-
   useEffect(() => {
-    console.log(imgsRef);
+    console.log('imgsRef', imgsRef);
     console.log(Object.values(imgsRef)[0]);
   }, [id, imgsRef]);
 
@@ -161,9 +158,11 @@ const Product = () => {
   function chooseColor(e) {
     console.log(e.target);
     setCurrentPhoto(0);
+    setCurrentColor(e.target.dataset.dataIndex);
     console.log(e.target.dataset.dataColor);
+    console.log(e.target.dataset.dataIndex);
     console.log(imgsRef);
-    let thisColor = '';
+    let thisColor = [];
     for (const color in imgsRef) {
       console.log(color);
       if (color !== e.target.dataset.dataColor) continue;
@@ -171,13 +170,26 @@ const Product = () => {
       thisColor = imgsRef[color];
       console.log(imgsRef[color]);
     }
-    setCurrentClothPhotos(thisColor);
+
+    const sortedUrls = thisColor.sort((a, b) => {
+      const filenameA = a.split('/').pop().split('?')[0];
+      const filenameB = b.split('/').pop().split('?')[0];
+      const numA = parseInt(filenameA.match(/\d+|%+/g).pop());
+      const numB = parseInt(filenameB.match(/\d+|%+/g).pop());
+      return numA - numB;
+    });
+    console.log(thisColor);
+    setCurrentClothPhotos(sortedUrls);
   };
 
-  const firstLiRef = useRef(null);
+  useEffect(() => {
+    console.log(`currentColor :`, currentColor);
+  }, [currentColor]);
+
+  console.log(colorLiRef?.current?.children[0]);
 
   useEffect(() => {
-    const firstColor = firstLiRef.current;
+    const firstColor = colorLiRef?.current?.children[0];
     console.log(firstColor);
     if (firstColor) firstColor.click();
   }, [imgsRef])
@@ -201,13 +213,17 @@ const Product = () => {
       <div className="product">
         <div className="product__info flex">
           <div className='imgBlock'>
-            <ProductCarousel
-              key={thisProductData.id}
-              currentClothPhotos={currentClothPhotos}
-              name={thisProductData.name}
-              currentPhoto={currentPhoto}
-              setCurrentPhoto={setCurrentPhoto}
-            />
+            <div className='imgWrapper'>
+
+              <ProductCarousel
+                key={thisProductData.id}
+                currentClothPhotos={currentClothPhotos}
+                name={thisProductData.name}
+                currentPhoto={currentPhoto}
+                setCurrentPhoto={setCurrentPhoto}
+              />
+
+            </div>
           </div>
 
           <div className="product__allOptions">
@@ -227,16 +243,18 @@ const Product = () => {
             {/*}*/}
 
             <h4>Цвет:</h4>
-            <ul className="product__options flex">
+            <ul className="product__options flex" ref={colorLiRef}>
 
               {
                 colorsNames.map((name, index) => (
                   <li
-                    ref={index === 0 ? firstLiRef : null}
+                    // ref={index === 0 ? colorLiRef : null}
+                    // ref={colorLiRef}
                     style={{ backgroundColor: colorsObj[name] }}
                     key={name} title={name}
                     data-data-color={name}
-                    className="product__options-colorBtn"
+                    data-data-index={index}
+                    className={`product__options-colorBtn ${currentColor == index ? 'active' : ''}`}
                     onClick={chooseColor}
                   />
                 ))

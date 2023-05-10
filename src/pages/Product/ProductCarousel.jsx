@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Blocks } from 'react-loader-spinner';
 
 const ProductCarousel = ({ currentClothPhotos, name, currentPhoto, setCurrentPhoto }) => {
   // const [currentPhoto, setCurrentPhoto] = useState(0);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
@@ -12,32 +13,36 @@ const ProductCarousel = ({ currentClothPhotos, name, currentPhoto, setCurrentPho
     if (currentClothPhotos.length > 0) {
       setIsLoading(false);
     }
-  }, [currentClothPhotos]); 
+  }, [currentClothPhotos]);
 
   const handleSwitch = (colorIndex) => {
     setCurrentPhoto(colorIndex);
   };
 
   useEffect(() => {
-      console.log(currentClothPhotos);
-      console.log(currentClothPhotos[0]);
+    console.log(currentClothPhotos);
+    console.log(currentClothPhotos[0]);
   }, [currentClothPhotos]);
 
   return (
     <>
       {isLoading ? (
-        <p>isLoading...</p>
+        <Blocks
+          height="80"
+          width="80"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="spinner"
+        />
       ) : (
         <>
           <img src={currentClothPhotos[currentPhoto]} alt={name} />
 
-          <div className='colorSwitcher flex'>
+          <div className='photoSwitcher flex'>
             {Array.isArray(currentClothPhotos) && currentClothPhotos?.map((photo, photoIndex) => (
               <div
                 key={photoIndex}
-                className={`rectangle ${
-                  currentPhoto === photoIndex ? 'active' : ''
-                }`}
+                className={`rectangle ${currentPhoto === photoIndex ? 'active' : ''}`}
                 onClick={() => handleSwitch(photoIndex)}
               ></div>
             ))}
